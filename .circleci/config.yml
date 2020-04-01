@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run: pip install -r requirements.txt
+      - run:
+          name: Running Tests
+          command: python validator_project/manage.py test
+    branches:
+      only:
+        - master
+        - develop
