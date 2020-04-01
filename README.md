@@ -11,7 +11,7 @@
     6. It is validated the existence of all fields
 
 2. To the User data:
-    1. As was indicated on the challenge, if the user downgraded/upgraded his plan then the current date is added/updated in the user object 
+    1. As it was indicated on the challenge, if the user downgraded/upgraded his plan then the current date is added/updated in the user object 
     2. If the payment status is different than completed, then the user subscription is set to free and the ENABLED_FEATURES to True
     3. Also, the last payment date is added to the object
 
