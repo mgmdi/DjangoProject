@@ -2,13 +2,18 @@ import requests
 from django.conf import settings
 
 def get_user(user_id):
-    response = requests.get('http://5e84eab9a8fdea00164ace7f.mockapi.io/customer')
-    if(response.status_code == '200'):
+    response = requests.get(settings.API_URL + user_id)
+    if(response):
         return response.json()
     else:
         return None
 
 
-def update_user(user_data):
-    print('update user')
+def update_user(user_data, user_id):
+    response = requests.post(settings.API_URL + user_id)
+    if(response):
+        return True
+    else:
+        return False
+
 
