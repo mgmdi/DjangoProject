@@ -1,1 +1,7 @@
 env
+db.sqlite3
+validator_project/__pycache__
+validator_project/validator/__pycache__
+validator_project/validator_project/__pycache__
+*.pyc
+validator_project/validator/migrations

@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from validator import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('payments/paypal/', views.IPNValidator.as_view()),
 ]
