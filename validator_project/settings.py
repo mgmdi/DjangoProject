@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'validator.middleware.timezones_middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'urls'
@@ -119,3 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# ENVIROMENT
+
+API_URL = 'http://localhost:8010/api/v1/customerdata/'
