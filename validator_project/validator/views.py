@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from validator.forms import ValidatorForm
+from validator.services import get_user
+from validator import validators
+import datetime
 
 class IPNValidator(APIView):
     """
@@ -12,10 +16,25 @@ class IPNValidator(APIView):
         """
         Returns if IPN is valid.
         """
-        reqForm = ValidatorForm(request.data or None)
-        print(reqForm)
-        if reqForm.is_valid():
-            # Si es valido hago get del usuario, hago las verificaciones y con eso hago update
-            print('FORM IS VALID')
+        # Validates existance and format of request fields
+        req_form = ValidatorForm(request.data or None)
 
-        return Response('OK')
+        if req_form.is_valid():
+            print('FORM IS VALID')
+            # User_data is a dictionary
+            user_data = get_user(req_form.data['payer_id'])
+
+            if(user_data):
+                user_data = validators.validate_payment_status(req_form.data['payment_status'], user_data)
+                user_data = validators.validate_plan_dates(req_form.data['item_name'], user_data)
+                user_data['LAST_PAYMENT_DATE'] = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+        else:
+            return Response({
+                    'message': 'Invalid form', 
+                    }, 
+                    status=status.HTTP_400_BAD_REQUEST
+                    )
